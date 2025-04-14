@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOUSE BEATS | La mejor música house</title>
+    <style>
+        /* Reset y estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header y navegación */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: 0.5s;
+            background-color: rgba(18, 18, 18, 0.9);
+        }
+
+        header.sticky {
+            padding: 15px 50px;
+            background-color: #090909;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            color: #e600ff;
+            font-weight: 700;
+            font-size: 2em;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #00c6ff;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            color: #fff;
+        }
+
+        /* Hero section */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/800') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent, #000 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+
+        .hero-btn {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Visualizador de audio */
+        .audio-visualizer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .bar {
+            width: 10px;
+            background: linear-gradient(to top, #e600ff, #00c6ff);
+            margin: 0 2px;
+            border-radius: 5px 5px 0 0;
+            animation: equalize 1s infinite;
+        }
+
+        @keyframes equalize {
+            0%, 100% {
+                height: 20px;
+            }
+            50% {
+                height: 80px;
+            }
+        }
+
+        /* Secciones */
+        section {
+            padding: 100px 50px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+
+        /* Sección Acerca Del House */
+        .about {
+            background-color: #0a0a0a;
+        }
+
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 1.1em;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Sección de artistas */
+        .artists {
+            background-color: #121212;
+        }
+
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .artist-card {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .artist-img {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .artist-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .artist-card:hover .artist-img img {
+            transform: scale(1.1);
+        }
+
+        .artist-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .artist-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .artist-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .artist-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .artist-social a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .artist-social a:hover {
+            color: #00c6ff;
+        }
+
+        /* Sección de eventos */
+        .events {
+            background-color: #0a0a0a;
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .event-card {
+            display: flex;
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateX(10px);
+        }
+
+        .event-date {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            color: white;
+            min-width: 120px;
+        }
+
+        .event-date .day {
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+
+        .event-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .event-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .event-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .event-location {
+            display: flex;
+            align-items: center;
+            color: #00c6ff;
+            margin-bottom: 15px;
+        }
+
+        .event-location i {
+            margin-right: 8px;
+        }
+
+        .event-action {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .event-btn {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: #121212;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter p {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border: none;
+            background: #1e1e1e;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .newsletter-btn:hover {
+            background: linear-gradient(45deg, #c100d9, #00a5d9);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            color: #e600ff;
+            font-weight: 700;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-logo span {
+            color: #00c6ff;
+        }
+
+        .footer-links {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00c6ff;
+        }
+
+        .social-links {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e1e1e;
+            color: #fff;
+            transition: transform 0.3s, background 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+        }
+
+        .copyright {
+            color: #777;
+            margin-top: 30px;
+        }
+
+        /* Botón reproducir música */
+        .play-music {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e600ff, #00c6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .play-music:hover {
+            transform: scale(1.1);
+        }
+
+        .play-music i {
+            color: white;
+            font-size: 1.5em;
+        }
+
+        /* Reproductor de música */
+        .music-player {
+            position: fixed;
+            bottom: -80px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.95);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            transition: bottom 0.5s;
+            z-index: 99;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .music-player.active {
+            bottom: 0;
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .track-thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .track-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .track-details p {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .control-btn:hover {
+            color: #00c6ff;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 30px;
+        }
+
+        .volume-control input[type="range"] {
+            width: 100px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header.sticky {
+                padding: 10px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 3.5em;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .event-card {
+                flex-direction: column;
+            }
+            
+            .event-date {
+                padding: 10px;
+                min-width: 0;
+                width: 100%;
+            }
+            
+            .event-action {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.2em;
+            }
+            
+            section {
+                padding: 70px 30px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.95);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 0.5s;
+                z-index: 999;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .menu-toggle {
+                position: relative;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                z-index: 1000;
+                display: block;
+            }
+            
+            .menu-toggle span {
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background: #fff;
+                transition: 0.3s;
+                transform-origin: center;
+            }
+            
+            .menu-toggle span:nth-child(1) {
+                top: 0;
+            }
+            
+            .menu-toggle span:nth-child(2) {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .menu-toggle span:nth-child(3) {
+                bottom: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(13px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-13px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .newsletter-input {
+                border-radius: 10px 10px 0 0;
+                text-align: center;
+            }
+            
+            .newsletter-btn {
+                border-radius: 0 0 10px 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y navegación -->
+    <header>
+        <a href="#" class="logo">HOUSE<span>BEATS</span></a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Inicio</a></li>
+                <li><a href="#about">Sobre House</a></li>
+                <li><a href="#artists">Artistas</a></li>
+                <li><a href="#events">Eventos</a></li>
+                <li><a href="#newsletter">Newsletter</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>La Mejor Música House</h1>
+            <p>Descubre el ritmo que mueve al mundo. Conecta con la mejor comunidad house, artistas legendarios y eventos inolvidables.</p>
+            <button class="hero-btn">Descubre más</button>
+        </div>
+        <div class="audio-visualizer">
+            <div class="bar" style="animation-delay: 0.1s; height: 20px;"></div>
+            <div class="bar" style="animation-delay: 0.2s; height: 50px;"></div>
+            <div class="bar" style="animation-delay: 0.3s; height: 30px;"></div>
+            <div class="bar" style="animation-delay: 0.4s; height: 70px;"></div>
+            <div class="bar" style="animation-delay: 0.5s; height: 40px;"></div>
+            <div class="bar" style="animation-delay: 0.6s; height: 60px;"></div>
+            <div class="bar" style="animation-delay: 0.7s; height: 80px;"></div>
+            <div class="bar" style="animation-delay: 0.8s; height: 50px;"></div>
+            <div class="bar" style="animation-delay: 0.9s; height: 60px;"></div>
+            <div class="bar" style="animation-delay: 1.0s; height: 70px;"></div>
+            <div class="bar" style="animation-delay: 0.9s; height: 60px;"></div>
+            <div class="bar" style="animation-delay: 0.8s; height: 50px;"></div>
+            <div class="bar" style="animation-delay: 0.7s; height: 80px;"></div>
+            <div class="bar" style="animation-delay: 0.6s; height: 60px;"></div>
+            <div class="bar" style="animation-delay: 0.5s; height: 40px;"></div>
+            <div class="bar" style="animation-delay: 0.4s; height: 70px;"></div>
+            <div class="bar" style="animation-delay: 0.3s; height: 30px;"></div>
+            <div class="bar" style="animation-delay: 0.2s; height: 50px;"></div>
+            <div class="bar" style="animation-delay: 0.1s; height: 20px;"></div>
+        </div>
+    </section>
+
+    <!-- Sección sobre el house -->
+    <section class="about" id="about">
+        <h2 class="section-title">Acerca del House</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>La música house es un género de música electrónica de baile que se originó en Chicago a principios de la década de 1980. Nacida en clubes como el Warehouse, de donde toma su nombre, esta música se caracteriza por su ritmo de 4/4, sus líneas de bajo profundas y sus elementos percusivos hipnóticos.</p>
+                <p>A lo largo de los años, el house ha evolucionado en numerosos subgéneros, como el deep house, tech house, progressive house y muchos más, pero todos mantienen el espíritu original: hacer que la gente baile y sentir la música con el alma.</p>
+                <p>El impacto cultural del house music ha sido profundo, influyendo en la moda, el arte y, por supuesto, en la forma en que la gente socializa y se divierte. Los clubes nocturnos dedicados a este género se han convertido en espacios sagrados para los amantes de la música electrónica.</p>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="Historia de la música house">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de artistas -->
+    <section class="artists" id="artists">
+        <h2 class="section-title">DJs y Productores</h2>
+        <div class="artist-grid">
+            <div class="artist-card">
+                <div class="artist-img">
+                    <img src="/api/placeholder/400/400" alt="DJ Alex">
+                </div>
+                <div class="artist-info">
+                    <h3>DJ Alex</h3>
+                    <p>Maestro del Deep House</p>
+                    <div class="artist-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="artist-card">
+                <div class="artist-img">
+                    <img src="/api/placeholder/400/400" alt="DJ Maya">
+                </div>
+                <div class="artist-info">
+                    <h3>DJ Maya</h3>
+                    <p>Reina del Tech House</p>
+                    <div class="artist-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="artist-card">
+                <div class="artist-img">
+                    <img src="/api/placeholder/400/400" alt="DJ Carlos">
+                </div>
+                <div class="artist-info">
+                    <h3>DJ Carlos</h3>
+                    <p>Pionero del Progressive House</p>
+                    <div class="artist-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="artist-card">
+                <div class="artist-img">
+                    <img src="/api/placeholder/400/400" alt="DJ Laura">
+                </div>
+                <div class="artist-info">
+                    <h3>DJ Laura</h3>
+                    <p>Especialista en Funky House</p>
+                    <div class="artist-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de eventos -->
+    <section class="events" id="events">
+        <h2 class="section-title">Próximos Eventos</h2>
+        <div class="event-list">
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">15</span>
+                    <span class="month">May</span>
+                </div>
+                <div class="event-info">
+                    <h3>House Nation Festival</h3>
+                    <p>La mayor celebración anual de música house con los mejores DJs internacionales.</p>
+                    <div class="event-location">
+                        <i class="fas fa-map-marker-alt"></i> Palacio de Deportes, Madrid
+                    </div>
+                </div>
+                <div class="event-action">
+                    <button class="event-btn">Entradas</button>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">22</span>
+                    <span class="month">May</span>
+                </div>
+                <div class="event-info">
+                    <h3>Deep Vibes Club Night</h3>
+                    <p>Una noche dedicada a los sonidos más profundos del house music.</p>
+                    <div class="event-location">
+                        <i class="fas fa-map-marker-alt"></i> Club Infinity, Barcelona
+                    </div>
+                </div>
+                <div class="event-action">
+                    <button class="event-btn">Entradas</button>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">29</span>
+                    <span class="month">May</span>
+                </div>
+                <div class="event-info">
+                    <h3>Summer House Party</h3>
+                    <p>Fiesta al aire libre para dar la bienvenida al verano con los mejores ritmos house.</p>
+                    <div class="event-location">
+                        <i class="fas fa-map-marker-alt"></i> Playa de Marbella, Málaga
+                    </div>
+                </div>
+                <div class="event-action">
+                    <button class="event-btn">Entradas</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter">
+        <h2 class="section-title">Suscríbete al Newsletter</h2>
+        <div class="newsletter-content">
+            <p>Mantente al día con las últimas noticias sobre eventos, lanzamientos de música y entrevistas exclusivas con tus DJs favoritos.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
+                <button type="submit" class="newsletter-btn">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="#" class="footer
